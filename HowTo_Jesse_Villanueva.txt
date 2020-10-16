@@ -1,0 +1,5 @@
+Compile:
+Compile requires Maven or javac2. Build feature in IntelliJ IDEA Community Edition is recommended.
+
+Execute:
+Run "MainCalculator.jar" in the directory \Calculator\out\artifacts\Calculator_jar
