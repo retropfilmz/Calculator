@@ -18,14 +18,14 @@
           <text value=""/>
         </properties>
       </component>
-      <component id="6d67" class="javax.swing.JButton" binding="displayButton">
+      <component id="6d67" class="javax.swing.JButton" binding="buttonDelete">
         <constraints>
           <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="20" height="20"/>
           </grid>
         </constraints>
         <properties>
-          <text value="Display"/>
+          <text value="Delete"/>
         </properties>
       </component>
       <component id="509ff" class="javax.swing.JButton" binding="button1">
@@ -194,7 +194,7 @@
           <text value="ln"/>
         </properties>
       </component>
-      <component id="5af48" class="javax.swing.JButton" binding="logButton" default-binding="true">
+      <component id="5af48" class="javax.swing.JButton" binding="buttonLog">
         <constraints>
           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
