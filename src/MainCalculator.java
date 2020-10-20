@@ -1,6 +1,14 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Stack;
+
+class Node
+{
+    public String data;
+    public Node left;
+    public Node right;
+}
 
 public class MainCalculator
 {
@@ -41,8 +49,12 @@ public class MainCalculator
         {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //evaluateExpression();
-                result.setText(textInput1.getText());
+                String entered = '(' + textInput1.getText() + ')';
+                double myresult;
+                myresult = infixToPostfix(entered);
+                String resultToPost = new String();
+                resultToPost += myresult;
+                result.setText(resultToPost);
             }
         });
 
@@ -241,13 +253,102 @@ public class MainCalculator
 
     }
 
-    public static void evaluateExpression()
+    public static double infixToPostfix(String expression)
     {
-        double answer;
+        while (expression.contains("s") || expression.contains("c") || expression.contains("t") || expression.contains("l"))
+        {
+            expression = functionPresent(expression);
+        }
+
+        // Stack for nodes
+        Stack<Node> nodes = new Stack<Node>();
+
+        // Stack for operators
+        Stack<String> operators = new Stack<String>();
+
+        double answer = 15;
+        return answer;
+    }
+
+    public static String functionPresent(String expression){
+        int preend = expression.length(), currentend = expression.length();
+        String pre, current, post;
+
+        // Find the start of the expression
+        for (int i = 0; 0 < expression.length(); i++)
+        {
+            char c = expression.charAt(i);
+            if (c == 's' || c == 'c' || c == 't' || c == 'l')
+            {
+                preend = i;
+                break;
+            }
+        }
+
+        // Save everything before expression in pre, and set current to remainder.
+        pre = expression.substring(0, preend);
+        current = expression.substring(preend);
+
+        // Find end of expression
+        int lpar = 1;
+        int rpar = 0;
+        int start = current.indexOf('(') + 1;
+        for (int i = start; i < current.length(); i++)
+        {
+            if (lpar == rpar) break;
+            if (current.charAt(i) == '(') lpar++;
+            if (current.charAt(i) == ')')
+            {
+                currentend = i;
+                rpar++;
+            }
+        }
+
+        // Chop off portion that is outside of parentheses
+        current = current.substring(0, currentend+1);
+        post = expression.substring(currentend+2);
+        double newCurrent = 0;
+
+        // Evaluate "current"
+        switch (current.charAt(0)){
+            case 's':
+                // Sin
+                newCurrent = Math.sin(infixToPostfix(current.substring(3)));
+                break;
+            case 'c':
+                // Cos
+                if (current.charAt(2) == 's') newCurrent = Math.cos(infixToPostfix(current.substring(3)));
+                // Cot
+                if (current.charAt(2) == 't') newCurrent = 1 / Math.tan(infixToPostfix(current.substring(3)));
+                break;
+            case 't':
+                // Tan
+                newCurrent = Math.tan(infixToPostfix(current.substring(3)));
+                break;
+            case 'l':
+                // Log
+                if (current.charAt(1) == 'o') newCurrent = Math.log(infixToPostfix(current.substring(3)));
+                // Ln
+                if (current.charAt(1) == 'n') newCurrent = Math.log(infixToPostfix(current.substring(2)));
+                break;
+            default:
+                //There was an error this isn't good
+
+        }
+
+        //Put string back together and send it back
+        String newString = pre + newCurrent + post;
+        return newString;
+
     }
 
     public static void main(String[] args)
     {
+        // DEBUG CODE
+        String entered = "(5*sin(15)";
+        infixToPostfix(entered);
+        // END DEBUG CODE
+
         JFrame frame = new JFrame("Calculator");
         frame.setContentPane(new MainCalculator().gui);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
