@@ -1,10 +1,10 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Stack;
 
-public class MainCalculator
-{
+public class MainCalculator {
 
     private JPanel gui;
     private JTextField textInput1;
@@ -36,10 +36,8 @@ public class MainCalculator
     private JButton buttonLParenth;
     private JLabel result;
 
-    public MainCalculator()
-    {
-        buttonEquals.addActionListener(new ActionListener()
-        {
+    public MainCalculator() {
+        buttonEquals.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String entered = '(' + textInput1.getText() + ')';
@@ -51,200 +49,175 @@ public class MainCalculator
             }
         });
 
-        button0.addActionListener(new ActionListener()
-        {
+        button0.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textInput1.setText(textInput1.getText() + 0);
             }
         });
 
-        button1.addActionListener(new ActionListener()
-        {
+        button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textInput1.setText(textInput1.getText() + 1);
             }
         });
 
-        button2.addActionListener(new ActionListener()
-        {
+        button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textInput1.setText(textInput1.getText() + 2);
             }
         });
 
-        button3.addActionListener(new ActionListener()
-        {
+        button3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textInput1.setText(textInput1.getText() + 3);
             }
         });
 
-        button4.addActionListener(new ActionListener()
-        {
+        button4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textInput1.setText(textInput1.getText() + 4);
             }
         });
 
-        button5.addActionListener(new ActionListener()
-        {
+        button5.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textInput1.setText(textInput1.getText() + 5);
             }
         });
 
-        button6.addActionListener(new ActionListener()
-        {
+        button6.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textInput1.setText(textInput1.getText() + 6);
             }
         });
 
-        button7.addActionListener(new ActionListener()
-        {
+        button7.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textInput1.setText(textInput1.getText() + 7);
             }
         });
 
-        button8.addActionListener(new ActionListener()
-        {
+        button8.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textInput1.setText(textInput1.getText() + 8);
             }
         });
 
-        button9.addActionListener(new ActionListener()
-        {
+        button9.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textInput1.setText(textInput1.getText() + 9);
             }
         });
 
-        buttonDecimal.addActionListener(new ActionListener()
-        {
+        buttonDecimal.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textInput1.setText(textInput1.getText() + '.');
             }
         });
 
-        buttonAdd.addActionListener(new ActionListener()
-        {
+        buttonAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textInput1.setText(textInput1.getText() + '+');
             }
         });
 
-        buttonSubtract.addActionListener(new ActionListener()
-        {
+        buttonSubtract.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textInput1.setText(textInput1.getText() + '-');
             }
         });
 
-        buttonMultiply.addActionListener(new ActionListener()
-        {
+        buttonMultiply.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textInput1.setText(textInput1.getText() + '*');
             }
         });
 
-        buttonDivide.addActionListener(new ActionListener()
-        {
+        buttonDivide.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textInput1.setText(textInput1.getText() + '/');
             }
         });
 
-        buttonExponent.addActionListener(new ActionListener()
-        {
+        buttonExponent.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textInput1.setText(textInput1.getText() + "^(");
             }
         });
 
-        buttonNaturalLog.addActionListener(new ActionListener()
-        {
+        buttonNaturalLog.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textInput1.setText(textInput1.getText() + "ln(");
             }
         });
 
-        buttonLog.addActionListener(new ActionListener()
-        {
+        buttonLog.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textInput1.setText(textInput1.getText() + "log(");
             }
         });
 
-        buttonSin.addActionListener(new ActionListener()
-        {
+        buttonSin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textInput1.setText(textInput1.getText() + "sin(");
             }
         });
 
-        buttonCos.addActionListener(new ActionListener()
-        {
+        buttonCos.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textInput1.setText(textInput1.getText() + "cos(");
             }
         });
 
-        buttonTan.addActionListener(new ActionListener()
-        {
+        buttonTan.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textInput1.setText(textInput1.getText() + "tan(");
             }
         });
 
-        buttonCot.addActionListener(new ActionListener()
-        {
+        buttonCot.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textInput1.setText(textInput1.getText() + "cot(");
             }
         });
 
-        buttonRParenth.addActionListener(new ActionListener()
-        {
+        buttonRParenth.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textInput1.setText(textInput1.getText() + ')');
             }
         });
 
-        buttonLParenth.addActionListener(new ActionListener()
-        {
+        buttonLParenth.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textInput1.setText(textInput1.getText() + '(');
             }
         });
 
-        buttonDelete.addActionListener(new ActionListener()
-        {
+        buttonDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String text = textInput1.getText();
@@ -255,14 +228,12 @@ public class MainCalculator
 
     }
 
-    public static double infixToPostfix(String expression)
-    {
+    public static double infixToPostfix(String expression) {
         // Check for syntactical errors
 
 
         // Handle functions within the expression
-        while (expression.contains("s") || expression.contains("c") || expression.contains("t") || expression.contains("l"))
-        {
+        while (expression.contains("s") || expression.contains("c") || expression.contains("t") || expression.contains("l")) {
             expression = functionPresent(expression);
         }
 
@@ -271,8 +242,7 @@ public class MainCalculator
         Stack<String> rpn = new Stack<String>();
         Stack<String> stack = new Stack<String>();
 
-        for (int pos = 0; pos < expression.length(); pos++)
-        {
+        for (int pos = 0; pos < expression.length(); pos++) {
             char c = expression.charAt(pos);
 
             // If a number, find the end of it and add to stack
@@ -280,33 +250,27 @@ public class MainCalculator
                 int endpos = 0;
                 for (int i = pos; i < expression.length(); i++) {
                     char seekChar = expression.charAt(i);
-                    if (Character.isDigit(seekChar) || seekChar == '.')
-                    {
+                    if (Character.isDigit(seekChar) || seekChar == '.') {
                         continue;
-                    }
-                    else
-                    {
+                    } else {
                         endpos = i;
                         break;
                     }
                 }
-                rpn.push(expression.substring(pos,endpos));
-                pos = endpos-1;
+                rpn.push(expression.substring(pos, endpos));
+                pos = endpos - 1;
                 continue;
             }
 
             // If opening a set of parentheses, push it to stack.
-            if (c == '(')
-            {
+            if (c == '(') {
                 stack.push("(");
                 continue;
             }
 
             // If closing a set of parentheses, pop to rpn until opening parentheses occurs.
-            if (c == ')')
-            {
-                while (!stack.isEmpty() && stack.peek() != "(")
-                {
+            if (c == ')') {
+                while (!stack.isEmpty() && stack.peek() != "(") {
                     rpn.push(stack.pop());
                 }
                 // Once we hit the open parentheses, pop it and exit loop
@@ -315,8 +279,7 @@ public class MainCalculator
             }
 
             // When an operand has been found
-            else
-            {
+            else {
                 while (!stack.isEmpty() && pemdas(c) <= pemdas(stack.peek())) {
                     rpn.push(stack.pop());
                 }
@@ -330,8 +293,7 @@ public class MainCalculator
         // ----- Solve RPN -----
         // Grab the RPN from the stack and turn it into an array to access it properly
         String[] rpnArray = new String[rpn.size()];
-        for (int i = rpn.size()-1; i > -1; i--)
-        {
+        for (int i = rpn.size() - 1; i > -1; i--) {
             rpnArray[i] = rpn.pop();
         }
 
@@ -339,28 +301,25 @@ public class MainCalculator
         if (rpnArray.length == 1) return Double.parseDouble(rpnArray[0]);
 
         // Define all operators possible in the question
-        String operators =  "^*/+-";
+        String operators = "^*/+-";
 
         // Create stack for solving the problem
         Stack<String> solvingStack = new Stack<String>();
 
-        for (int i = 0; i < rpnArray.length; i++)
-        {
+        for (int i = 0; i < rpnArray.length; i++) {
             // If it is a number, add to stack
-            if (!operators.contains(rpnArray[i]))
-            {
+            if (!operators.contains(rpnArray[i])) {
                 solvingStack.push(rpnArray[i]);
             }
             // Otherwise we do the math
-            else
-            {
+            else {
                 // Popping B first because of subtraction, division, and exponent
                 double b = Double.parseDouble(solvingStack.pop());
                 double a = Double.parseDouble(solvingStack.pop());
                 int operator = operators.indexOf(rpnArray[i]);
                 double result = 0;
                 String resultStr = new String();
-                switch (operator){
+                switch (operator) {
                     // Exponent
                     case 0:
                         result = Math.pow(a, b);
@@ -392,23 +351,18 @@ public class MainCalculator
         }
 
 
-
-
         double answer = Double.parseDouble(solvingStack.pop());
         return answer;
     }
 
-    public static String functionPresent(String expression)
-    {
+    public static String functionPresent(String expression) {
         int preend = expression.length(), currentend = expression.length();
         String pre, current, post;
 
         // Find the start of the expression
-        for (int i = 0; 0 < expression.length(); i++)
-        {
+        for (int i = 0; 0 < expression.length(); i++) {
             char c = expression.charAt(i);
-            if (c == 's' || c == 'c' || c == 't' || c == 'l')
-            {
+            if (c == 's' || c == 'c' || c == 't' || c == 'l') {
                 preend = i;
                 break;
             }
@@ -423,25 +377,23 @@ public class MainCalculator
         int lpar = 1;
         int rpar = 0;
         int start = current.indexOf('(') + 1;
-        for (int i = start; i < current.length(); i++)
-        {
+        for (int i = start; i < current.length(); i++) {
             if (lpar == rpar) break;
             if (current.charAt(i) == '(') lpar++;
-            if (current.charAt(i) == ')')
-            {
+            if (current.charAt(i) == ')') {
                 currentend = i;
                 rpar++;
             }
         }
 
         // Chop off portion that is outside of parentheses
-        post = current.substring(currentend+1);
+        post = current.substring(currentend + 1);
         if (post.length() == 0) post += ')';
-        current = current.substring(0, currentend+1);
+        current = current.substring(0, currentend + 1);
         double newCurrent = 0;
 
         // Evaluate "current"
-        switch (current.charAt(0)){
+        switch (current.charAt(0)) {
             case 's':
                 // Sin
                 newCurrent = Math.sin(infixToPostfix(current.substring(3)));
@@ -473,10 +425,8 @@ public class MainCalculator
 
     }
 
-    public static int pemdas(char c)
-    {
-        switch (c)
-        {
+    public static int pemdas(char c) {
+        switch (c) {
             case '+':
             case '-':
                 return 1;
@@ -490,11 +440,9 @@ public class MainCalculator
         return -1;
     }
 
-    public static int pemdas(String s)
-    {
+    public static int pemdas(String s) {
         char c = s.charAt(0);
-        switch (c)
-        {
+        switch (c) {
             case '+':
             case '-':
                 return 1;
@@ -508,8 +456,7 @@ public class MainCalculator
         return -1;
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         // DEBUG CODE
         //String entered = "(sin(15)+15)";
         //infixToPostfix(entered);
@@ -521,4 +468,5 @@ public class MainCalculator
         frame.pack();
         frame.setVisible(true);
     }
+
 }
