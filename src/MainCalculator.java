@@ -3,13 +3,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Stack;
 
-class Node
-{
-    public String data;
-    public Node left;
-    public Node right;
-}
-
 public class MainCalculator
 {
 
@@ -273,17 +266,140 @@ public class MainCalculator
             expression = functionPresent(expression);
         }
 
-        // Stack for nodes
-        Stack<Node> nodes = new Stack<Node>();
+        // ----- Create RPN -----
+        // Variables to store results
+        Stack<String> rpn = new Stack<String>();
+        Stack<String> stack = new Stack<String>();
 
-        // Stack for operators
-        Stack<String> operators = new Stack<String>();
+        for (int pos = 0; pos < expression.length(); pos++)
+        {
+            char c = expression.charAt(pos);
 
-        double answer = 15;
+            // If a number, find the end of it and add to stack
+            if (Character.isDigit(c)) {
+                int endpos = 0;
+                for (int i = pos; i < expression.length(); i++) {
+                    char seekChar = expression.charAt(i);
+                    if (Character.isDigit(seekChar) || seekChar == '.')
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        endpos = i;
+                        break;
+                    }
+                }
+                rpn.push(expression.substring(pos,endpos));
+                pos = endpos-1;
+                continue;
+            }
+
+            // If opening a set of parentheses, push it to stack.
+            if (c == '(')
+            {
+                stack.push("(");
+                continue;
+            }
+
+            // If closing a set of parentheses, pop to rpn until opening parentheses occurs.
+            if (c == ')')
+            {
+                while (!stack.isEmpty() && stack.peek() != "(")
+                {
+                    rpn.push(stack.pop());
+                }
+                // Once we hit the open parentheses, pop it and exit loop
+                stack.pop();
+                break;
+            }
+
+            // When an operand has been found
+            else
+            {
+                while (!stack.isEmpty() && pemdas(c) <= pemdas(stack.peek())) {
+                    rpn.push(stack.pop());
+                }
+                String operandString = new String();
+                operandString += c;
+                stack.push(operandString);
+            }
+
+        }
+
+        // ----- Solve RPN -----
+        // Grab the RPN from the stack and turn it into an array to access it properly
+        String[] rpnArray = new String[rpn.size()];
+        for (int i = rpn.size()-1; i > -1; i--)
+        {
+            rpnArray[i] = rpn.pop();
+        }
+
+        // If array is just one number, return it
+        if (rpnArray.length == 1) return Double.parseDouble(rpnArray[0]);
+
+        // Define all operators possible in the question
+        String operators =  "^*/+-";
+
+        // Create stack for solving the problem
+        Stack<String> solvingStack = new Stack<String>();
+
+        for (int i = 0; i < rpnArray.length; i++)
+        {
+            // If it is a number, add to stack
+            if (!operators.contains(rpnArray[i]))
+            {
+                solvingStack.push(rpnArray[i]);
+            }
+            // Otherwise we do the math
+            else
+            {
+                // Popping B first because of subtraction, division, and exponent
+                double b = Double.parseDouble(solvingStack.pop());
+                double a = Double.parseDouble(solvingStack.pop());
+                int operator = operators.indexOf(rpnArray[i]);
+                double result = 0;
+                String resultStr = new String();
+                switch (operator){
+                    // Exponent
+                    case 0:
+                        result = Math.pow(a, b);
+                        break;
+
+                    // Multiplication
+                    case 1:
+                        result = (a * b);
+                        break;
+
+                    // Division
+                    case 2:
+                        result = (a / b);
+                        break;
+
+                    // Addition
+                    case 3:
+                        result = (a + b);
+                        break;
+
+                    // Subtraction
+                    case 4:
+                        result = (a - b);
+                        break;
+                }
+                resultStr += result;
+                solvingStack.push(resultStr);
+            }
+        }
+
+
+
+
+        double answer = Double.parseDouble(solvingStack.pop());
         return answer;
     }
 
-    public static String functionPresent(String expression){
+    public static String functionPresent(String expression)
+    {
         int preend = expression.length(), currentend = expression.length();
         String pre, current, post;
 
@@ -357,11 +473,46 @@ public class MainCalculator
 
     }
 
+    public static int pemdas(char c)
+    {
+        switch (c)
+        {
+            case '+':
+            case '-':
+                return 1;
+            case '*':
+            case '/':
+                return 2;
+            case '^':
+                return 3;
+
+        }
+        return -1;
+    }
+
+    public static int pemdas(String s)
+    {
+        char c = s.charAt(0);
+        switch (c)
+        {
+            case '+':
+            case '-':
+                return 1;
+            case '*':
+            case '/':
+                return 2;
+            case '^':
+                return 3;
+
+        }
+        return -1;
+    }
+
     public static void main(String[] args)
     {
         // DEBUG CODE
-        String entered = "(sin(15)+15)";
-        infixToPostfix(entered);
+        //String entered = "(sin(15)+15)";
+        //infixToPostfix(entered);
         // END DEBUG CODE
 
         JFrame frame = new JFrame("Calculator");
