@@ -250,11 +250,24 @@ public class MainCalculator
             }
         });
 
+        buttonDelete.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String text = textInput1.getText();
+                textInput1.setText(text.substring(0, text.length() - 1));
+            }
+        });
+
 
     }
 
     public static double infixToPostfix(String expression)
     {
+        // Check for syntactical errors
+
+
+        // Handle functions within the expression
         while (expression.contains("s") || expression.contains("c") || expression.contains("t") || expression.contains("l"))
         {
             expression = functionPresent(expression);
@@ -287,6 +300,7 @@ public class MainCalculator
 
         // Save everything before expression in pre, and set current to remainder.
         pre = expression.substring(0, preend);
+        if (pre.length() == 0) pre += '(';
         current = expression.substring(preend);
 
         // Find end of expression
@@ -305,8 +319,9 @@ public class MainCalculator
         }
 
         // Chop off portion that is outside of parentheses
+        post = current.substring(currentend+1);
+        if (post.length() == 0) post += ')';
         current = current.substring(0, currentend+1);
-        post = expression.substring(currentend+2);
         double newCurrent = 0;
 
         // Evaluate "current"
@@ -345,7 +360,7 @@ public class MainCalculator
     public static void main(String[] args)
     {
         // DEBUG CODE
-        String entered = "(5*sin(15)";
+        String entered = "(sin(15)+15)";
         infixToPostfix(entered);
         // END DEBUG CODE
 
