@@ -242,6 +242,9 @@ public class MainCalculator {
         Stack<String> rpn = new Stack<String>();
         Stack<String> stack = new Stack<String>();
 
+        // Define all operators possible in the question
+        String operators = "^*/+-()";
+
         for (int pos = 0; pos < expression.length(); pos++) {
             char c = expression.charAt(pos);
 
@@ -251,6 +254,24 @@ public class MainCalculator {
                 for (int i = pos; i < expression.length(); i++) {
                     char seekChar = expression.charAt(i);
                     if (Character.isDigit(seekChar) || seekChar == '.') {
+                        continue;
+                    } else {
+                        endpos = i;
+                        break;
+                    }
+                }
+                rpn.push(expression.substring(pos, endpos));
+                pos = endpos - 1;
+                continue;
+            }
+
+            // If a negative number, find end of it and add to stack
+            if (c == '-' && operators.contains(expression.substring(pos-1, pos)))
+            {
+                int endpos = 0;
+                for (int i = pos; i < expression.length(); i++) {
+                    char seekChar = expression.charAt(i);
+                    if (Character.isDigit(seekChar) || seekChar == '.' || seekChar == '-') {
                         continue;
                     } else {
                         endpos = i;
@@ -275,7 +296,7 @@ public class MainCalculator {
                 }
                 // Once we hit the open parentheses, pop it and exit loop
                 stack.pop();
-                break;
+                continue;
             }
 
             // When an operand has been found
@@ -300,8 +321,7 @@ public class MainCalculator {
         // If array is just one number, return it
         if (rpnArray.length == 1) return Double.parseDouble(rpnArray[0]);
 
-        // Define all operators possible in the question
-        String operators = "^*/+-";
+
 
         // Create stack for solving the problem
         Stack<String> solvingStack = new Stack<String>();
@@ -310,9 +330,16 @@ public class MainCalculator {
             // If it is a number, add to stack
             if (!operators.contains(rpnArray[i])) {
                 solvingStack.push(rpnArray[i]);
+                continue;
+            }
+            else if (rpnArray[i].charAt(0) == '-' && rpnArray[i].length() > 1)
+            {
+                solvingStack.push(rpnArray[i]);
+                continue;
             }
             // Otherwise we do the math
-            else {
+            else
+            {
                 // Popping B first because of subtraction, division, and exponent
                 double b = Double.parseDouble(solvingStack.pop());
                 double a = Double.parseDouble(solvingStack.pop());
@@ -410,7 +437,7 @@ public class MainCalculator {
                 break;
             case 'l':
                 // Log
-                if (current.charAt(1) == 'o') newCurrent = Math.log(infixToPostfix(current.substring(3)));
+                if (current.charAt(1) == 'o') newCurrent = Math.log10(infixToPostfix(current.substring(3)));
                 // Ln
                 if (current.charAt(1) == 'n') newCurrent = Math.log(infixToPostfix(current.substring(2)));
                 break;
