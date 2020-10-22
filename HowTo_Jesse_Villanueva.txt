@@ -1,5 +1,32 @@
 Compile:
-Compile requires Maven or javac2. Build feature in IntelliJ IDEA Community Edition is recommended.
+Compile requires Maven or javac2 and IntelliJ compiler to handle the GUI form sheet.
+
+IntelliJ:
+Build feature in IntelliJ IDEA Community Edition is recommended.
+JAR can be built by opening the "Build" tab at the top, clicking "Build Artifacts", clicking "Edit" if prompted,
+clicking "Artifacts" on the tab on the right, selecting the plus in the upper left, selecting "JAR", then picking
+the "MainCalculator.java", either leave directory where it is or change it to where you would like to execute it,
+hit Apply, then OK. Open the "Build" menu once more, and then click "Build Artifacts".
+Select build if prompted. The JAR file will be placed in the directory \Calculator\out\artifacts\Calculator_jar
+unless you selected a different destination.
+
+Apache ANT:
+Can build from Apache ANT if intelliJ dependencies are installed on machine using the command "ant" in
+the main directory called "Calculator" using the build.xml.
+
+
 
 Execute:
-Run "MainCalculator.jar" in the directory \Calculator\out\artifacts\Calculator_jar
+Run "MainCalculator.jar" with no additional arguments in the directory \Calculator\out\artifacts\Calculator_jar (unless
+placed elsewhere)
+
+
+
+Usage/Limitations:
+Maximum is approximately 1.7*10^308, any number larger will show as Infinity or -Infinity.
+Imaginary numbers will show as NaN.
+Exponents require an opening and closing parentheses.
+sin, cos, tan, cot, log, and ln must all be lowercase, with an opening parentheses following and closing parentheses
+after the data being entered.
+No other letters or spaces are accepted.
+All parentheses that are opened must be closed.

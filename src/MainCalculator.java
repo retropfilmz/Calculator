@@ -41,11 +41,9 @@ public class MainCalculator {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String entered = '(' + textInput1.getText() + ')';
-                double myresult;
+                String myresult = "";
                 myresult = infixToPostfix(entered);
-                String resultToPost = new String();
-                resultToPost += myresult;
-                result.setText(resultToPost);
+                result.setText(myresult);
             }
         });
 
@@ -228,14 +226,67 @@ public class MainCalculator {
 
     }
 
-    public static double infixToPostfix(String expression) {
-        // Check for syntactical errors
+    public static String infixToPostfix(String expression) {
+        // ----- Check for syntactical errors -----
+        // Remove spaces
+        if (expression.contains(" "))
+        {
+            String newExpression = expression.replaceAll(" ", "");
+            expression = newExpression;
+        }
 
+        // Check for correct parentheses placement
+        int lp = 1, rp = 0;
+        String errorMessage = "";
+        for (int i = 1; i < expression.length(); i++)
+        {
+            if (expression.charAt(i) == '(') lp++;
+            if (expression.charAt(i) == ')') rp++;
+
+            if (lp == rp && i < expression.length()-1)
+            {
+                // Error extra parentheses
+                errorMessage = "Error: Extra parentheses";
+                return errorMessage;
+            }
+            else if (lp < rp)
+            {
+                // Error misplaced closing parentheses
+                errorMessage = "Error: Misplaced closing parentheses";
+                return errorMessage;
+            }
+            else if (lp > rp && i == expression.length()-1)
+            {
+                // Error missing closing parentheses
+                errorMessage = "Error: Missing closing parentheses";
+                return errorMessage;
+            }
+        }
+
+        // Add implied multiplication
+        String impliedMulOptions = "123456789.)";
+        for (int i = 1; i < expression.length(); i++)
+        {
+            char c = expression.charAt(i);
+            String prevChar = "";
+            prevChar += expression.charAt(i-1);
+            if (c == '(')
+            {
+                if (impliedMulOptions.contains(prevChar))
+                {
+                    String pre = expression.substring(0, i);
+                    String post = expression.substring(i);
+                    expression = pre + '*' + post;
+                }
+            }
+        }
 
         // Handle functions within the expression
         while (expression.contains("s") || expression.contains("c") || expression.contains("t") || expression.contains("l")) {
+            if (expression.charAt(0) == 'E') return expression;
             expression = functionPresent(expression);
         }
+
 
         // ----- Create RPN -----
         // Variables to store results
@@ -319,7 +370,7 @@ public class MainCalculator {
         }
 
         // If array is just one number, return it
-        if (rpnArray.length == 1) return Double.parseDouble(rpnArray[0]);
+        if (rpnArray.length == 1) return rpnArray[0];
 
 
 
@@ -359,6 +410,7 @@ public class MainCalculator {
 
                     // Division
                     case 2:
+                        if (b == 0) return "Error: Cannot divide by zero";
                         result = (a / b);
                         break;
 
@@ -378,8 +430,8 @@ public class MainCalculator {
         }
 
 
-        double answer = Double.parseDouble(solvingStack.pop());
-        return answer;
+        //double answer = Double.parseDouble(solvingStack.pop());
+        return solvingStack.pop();
     }
 
     public static String functionPresent(String expression) {
@@ -418,31 +470,58 @@ public class MainCalculator {
         if (post.length() == 0) post += ')';
         current = current.substring(0, currentend + 1);
         double newCurrent = 0;
+        double calculated =0;
 
         // Evaluate "current"
         switch (current.charAt(0)) {
             case 's':
                 // Sin
-                newCurrent = Math.sin(infixToPostfix(current.substring(3)));
+                calculated = Double.parseDouble(infixToPostfix(current.substring(3)));
+                newCurrent = Math.sin(calculated);
                 break;
             case 'c':
                 // Cos
-                if (current.charAt(2) == 's') newCurrent = Math.cos(infixToPostfix(current.substring(3)));
+                if (current.charAt(2) == 's')
+                {
+                    calculated = Double.parseDouble(infixToPostfix(current.substring(3)));
+                    newCurrent = Math.cos(calculated);
+                    break;
+                }
                 // Cot
-                if (current.charAt(2) == 't') newCurrent = 1 / Math.tan(infixToPostfix(current.substring(3)));
-                break;
+                if (current.charAt(2) == 't')
+                {
+                    calculated = Double.parseDouble(infixToPostfix(current.substring(3)));
+                    double tanVal = Math.tan(calculated);
+                    if (tanVal == 0) return "Error: tan was 0, cannot divide by zero";
+                    newCurrent = 1 / tanVal;
+                    break;
+                }
             case 't':
                 // Tan
-                newCurrent = Math.tan(infixToPostfix(current.substring(3)));
+                calculated = Double.parseDouble(infixToPostfix(current.substring(3)));
+                newCurrent = Math.tan(calculated);
                 break;
             case 'l':
                 // Log
-                if (current.charAt(1) == 'o') newCurrent = Math.log10(infixToPostfix(current.substring(3)));
+
+                if (current.charAt(1) == 'o')
+                {
+                    calculated = Double.parseDouble(infixToPostfix(current.substring(3)));
+                    if (calculated <= 0) return "Error: Log is not defined < 0";
+                    newCurrent = Math.log10(calculated);
+                    break;
+                }
                 // Ln
-                if (current.charAt(1) == 'n') newCurrent = Math.log(infixToPostfix(current.substring(2)));
-                break;
+
+                if (current.charAt(1) == 'n')
+                {
+                    calculated = Double.parseDouble(infixToPostfix(current.substring(2)));
+                    if (calculated <= 0) return "Error: Ln is not defined < 0";
+                    newCurrent = Math.log(calculated);
+                    break;
+                }
             default:
-                //There was an error this isn't good
+                // This should not be reachable.
 
         }
 
@@ -484,11 +563,6 @@ public class MainCalculator {
     }
 
     public static void main(String[] args) {
-        // DEBUG CODE
-        //String entered = "(sin(15)+15)";
-        //infixToPostfix(entered);
-        // END DEBUG CODE
-
         JFrame frame = new JFrame("Calculator");
         frame.setContentPane(new MainCalculator().gui);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
