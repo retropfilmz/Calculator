@@ -27,6 +27,6 @@ Maximum is approximately 1.7*10^308, any number larger will show as Infinity or 
 Imaginary numbers will show as NaN.
 Exponents require an opening and closing parentheses.
 sin, cos, tan, cot, log, and ln must all be lowercase, with an opening parentheses following and closing parentheses
-after the data being entered.
+after the data being entered these are the only functions allowed.
 No other letters or spaces are accepted.
 All parentheses that are opened must be closed.

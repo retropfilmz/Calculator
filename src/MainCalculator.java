@@ -279,6 +279,22 @@ public class MainCalculator {
                     expression = pre + '*' + post;
                 }
             }
+
+            // Also check for multiple subtraction signs can convert
+            if (c == '-')
+            {
+                if (c == prevChar.charAt(0))
+                {
+                    String pre = expression.substring(0, i-1);
+                    String post = expression.substring(i+1);
+                    if (expression.charAt(i-2) == '(')
+                    {
+                        expression = pre + post;
+                        i--;
+                    }
+                    else expression = pre + '+' + post;
+                }
+            }
         }
 
         // Handle functions within the expression
